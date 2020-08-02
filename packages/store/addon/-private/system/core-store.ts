@@ -996,7 +996,7 @@ abstract class CoreStore extends Service {
 
     const type = normalizeModelName(modelName);
     const normalizedId = ensureStringId(id);
-    const resource = constructResource(type, normalizedId);
+    const resource: ResourceIdentifierObject = constructResource(type, normalizedId);
     const internalModel = internalModelFactoryFor(this).lookup(resource);
     options = options || {};
 
@@ -1436,7 +1436,7 @@ abstract class CoreStore extends Service {
     }
     const type = normalizeModelName(modelName);
     const normalizedId = ensureStringId(id);
-    const resource = constructResource(type, normalizedId);
+    const resource: ResourceIdentifierObject = constructResource(type, normalizedId);
 
     return internalModelFactoryFor(this).lookup(resource).recordReference;
   }
@@ -1477,7 +1477,7 @@ abstract class CoreStore extends Service {
     const normalizedId = ensureStringId(id);
 
     if (this.hasRecordForId(type, normalizedId)) {
-      const resource = constructResource(type, normalizedId);
+      const resource: ResourceIdentifierObject = constructResource(type, normalizedId);
       return internalModelFactoryFor(this)
         .lookup(resource)
         .getRecord();
@@ -1575,7 +1575,7 @@ abstract class CoreStore extends Service {
       typeof modelName === 'string'
     );
 
-    const resource = constructResource(modelName, ensureStringId(id));
+    const resource: ResourceIdentifierObject = constructResource(modelName, ensureStringId(id));
 
     return internalModelFactoryFor(this)
       .lookup(resource)
@@ -2623,7 +2623,11 @@ abstract class CoreStore extends Service {
     @param {Object} data
   */
   _load(data: ExistingResourceObject) {
-    const resource = constructResource(normalizeModelName(data.type), ensureStringId(data.id), coerceId(data.lid));
+    const resource: ResourceIdentifierObject = constructResource(
+      normalizeModelName(data.type),
+      ensureStringId(data.id),
+      coerceId(data.lid)
+    );
 
     let internalModel = internalModelFactoryFor(this).lookup(resource, data);
 
@@ -3048,7 +3052,7 @@ abstract class CoreStore extends Service {
    * @internal
    */
   _internalModelForId(type: string, id: string | null, lid: string | null): InternalModel {
-    const resource = constructResource(type, id, lid);
+    const resource: ResourceIdentifierObject = constructResource(type, id, lid);
     return internalModelFactoryFor(this).lookup(resource);
   }
 
