@@ -67,9 +67,7 @@ export default EmberObject.extend(MutableArray, DeprecatedEvented, {
     @property {Boolean} isLoaded
     */
     this.isLoaded = this.isLoaded || false;
-
-    // async has-many rendering tests
-    this._length = 0;
+    this.length = 0;
 
     /**
     Used for async `hasMany` arrays
@@ -166,17 +164,6 @@ export default EmberObject.extend(MutableArray, DeprecatedEvented, {
       }
     }
     return false;
-  },
-
-  get length() {
-    // By using `get()`, the tracking system knows to pay attention to changes that occur.
-    get(this, '[]');
-
-    return this._length;
-  },
-
-  set length(value) {
-    return (this._length = value);
   },
 
   objectAt(index) {
